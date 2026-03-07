@@ -12,8 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 /* CRITICAL MOBILE FIX */
-html { background: #0e1a14; }
-body { background: #ffffff; }
+html, body { background: #0e1a14 !important; }
 nav { background: #0e1a14 !important; }
 .hero { background: #0e1a14 !important; min-height: 100vh !important; }
 .hero-bg { background: linear-gradient(160deg, #0e1a14 0%, #1c2e22 50%, #0e1a14 100%) !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; position: absolute !important; }
@@ -26,6 +25,14 @@ nav { background: #0e1a14 !important; }
 .hero-stat-label { color: rgba(255,255,255,0.65) !important; }
 .nav-logo { color: #ffffff !important; }
 .nav-logo span { color: #c9a84c !important; }
+/* MAP MODAL */
+.map-modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; }
+.map-modal.open { display:flex; }
+.map-box { background:#1a2e22; border-radius:16px; width:95vw; max-width:700px; height:80vh; overflow:hidden; position:relative; display:flex; flex-direction:column; }
+.map-header { padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.1); }
+.map-title { color:white; font-size:1rem; font-weight:700; }
+.map-close { background:none; border:none; color:rgba(255,255,255,0.6); font-size:1.5rem; cursor:pointer; }
+.map-frame { flex:1; border:none; width:100%; }
 </style>
 <style>
 :root {
@@ -883,7 +890,34 @@ flex-direction: column; gap: 16px;
   <div class="search-row">
     <div class="search-field">
       <label>Location</label>
-      <input type="text" id="searchLocation" placeholder="e.g. Lekki Phase 1, Lagos…" autocomplete="off"/>
+      <input type="text" id="searchLocation" placeholder="Search state, city or area..." autocomplete="off" list="ng-states"/>
+      <datalist id="ng-states">
+        <option value="Lagos"/><option value="Abuja (FCT)"/><option value="Kano"/>
+        <option value="Port Harcourt"/><option value="Ibadan"/><option value="Kogi"/>
+        <option value="Kaduna"/><option value="Enugu"/><option value="Delta"/>
+        <option value="Ogun"/><option value="Imo"/><option value="Anambra"/>
+        <option value="Benue"/><option value="Edo"/><option value="Kwara"/>
+        <option value="Cross River"/><option value="Abia"/><option value="Akwa Ibom"/>
+        <option value="Bauchi"/><option value="Borno"/><option value="Ebonyi"/>
+        <option value="Ekiti"/><option value="Gombe"/><option value="Jigawa"/>
+        <option value="Kebbi"/><option value="Katsina"/><option value="Nasarawa"/>
+        <option value="Niger"/><option value="Ondo"/><option value="Osun"/>
+        <option value="Plateau"/><option value="Sokoto"/><option value="Taraba"/>
+        <option value="Yobe"/><option value="Zamfara"/><option value="Adamawa"/>
+        <option value="Bayelsa"/>
+      </datalist>
+      <datalist id="statesList">
+        <option value="Lagos"><option value="Abuja (FCT)"><option value="Kano"><option value="Port Harcourt">
+        <option value="Ibadan"><option value="Kogi - Lokoja"><option value="Kaduna"><option value="Enugu">
+        <option value="Delta"><option value="Ogun"><option value="Imo"><option value="Anambra">
+        <option value="Benue"><option value="Edo"><option value="Kwara"><option value="Cross River">
+        <option value="Abia"><option value="Akwa Ibom"><option value="Bauchi"><option value="Borno">
+        <option value="Ebonyi"><option value="Ekiti"><option value="Gombe"><option value="Jigawa">
+        <option value="Kebbi"><option value="Katsina"><option value="Nasarawa"><option value="Niger">
+        <option value="Ondo"><option value="Osun"><option value="Plateau"><option value="Sokoto">
+        <option value="Taraba"><option value="Yobe"><option value="Zamfara"><option value="Adamawa">
+        <option value="Bayelsa">
+      </datalist>
     </div>
     <div class="search-field">
       <label>Property Type</label>
@@ -1297,7 +1331,7 @@ flex-direction: column; gap: 16px;
         </div>
         <div class="form-group"><label>Price (₦)</label><input type="number" id="lPrice" placeholder="e.g. 1500000"/></div>
         <div class="form-group"><label>State</label>
-          <select id="lState"><option>Lagos</option><option>Abuja</option><option>Rivers</option><option>Oyo</option><option>Kano</option><option>Delta</option><option>Enugu</option><option>Ogun</option></select>
+          <select id="lState"><option>Lagos</option><option>Abuja (FCT)</option><option>Kano</option><option>Rivers</option><option>Oyo</option><option>Kogi</option><option>Kaduna</option><option>Enugu</option><option>Delta</option><option>Ogun</option><option>Imo</option><option>Anambra</option><option>Benue</option><option>Edo</option><option>Kwara</option><option>Cross River</option><option>Abia</option><option>Akwa Ibom</option><option>Bauchi</option><option>Borno</option><option>Ebonyi</option><option>Ekiti</option><option>Gombe</option><option>Jigawa</option><option>Kebbi</option><option>Katsina</option><option>Nasarawa</option><option>Niger</option><option>Ondo</option><option>Osun</option><option>Plateau</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option><option>Adamawa</option><option>Bayelsa</option></select>
         </div>
         <div class="form-group full"><label>Full Address</label><input type="text" id="lAddress" placeholder="Street address, area…"/></div>
       </div>
@@ -1325,8 +1359,13 @@ flex-direction: column; gap: 16px;
     </div>
     <div id="listStep3" style="display:none">
       <h3 style="margin-bottom:16px;font-size:1rem;font-weight:700">Step 3: Photos & Contact</h3>
-      <div class="photo-upload" onclick="showToast('Photo upload ready in full backend version','success')">
+      <div class="photo-upload" onclick="document.getElementById('photoInput').click()" style="cursor:pointer">
         <div class="photo-upload-icon">📸</div>
+        <p><strong>Tap to add photos</strong></p>
+        <p style="margin-top:6px;font-size:0.78rem">Up to 5 photos. JPG or PNG.</p>
+        <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="previewPhotos(this)">
+        <div id="photoPreview" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"></div>
+      </div>
         <p><strong>Click to upload photos</strong> — drag & drop supported</p>
         <p style="margin-top:6px;font-size:0.78rem">Minimum 3 photos recommended. JPG, PNG. Max 10MB each.</p>
       </div>
@@ -1353,36 +1392,44 @@ flex-direction: column; gap: 16px;
 
 <div class="toast" id="toast"></div>
 
+<!-- MAP MODAL -->
+
+<div class="map-modal" id="mapModal" onclick="closeMapModal(event)">
+  <div class="map-box">
+    <div class="map-header">
+      <span class="map-title" id="mapTitle">Property Location</span>
+      <button class="map-close" onclick="document.getElementById('mapModal').classList.remove('open')">&#10005;</button>
+    </div>
+    <iframe class="map-frame" id="mapFrame" src="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>
+
 <script>
-// ── SUPABASE ──
-const SUPABASE_URL = 'https://fsddgawdywoudjwumpik.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZGRnYXdkeXdvdWRqd3VtcGlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTk0MzcsImV4cCI6MjA4ODM5NTQzN30.7eZNdY3HVd06DTgX9iyLlueDEsfysyeG5Tg7sJo8qyI';
-const sb = {
-  h: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json' },
-  async signUp(email, password, meta) {
-    const r = await fetch(SUPABASE_URL+'/auth/v1/signup', { method:'POST', headers:this.h, body:JSON.stringify({email, password, data:meta}) });
-    return r.json();
-  },
-  async signIn(email, password) {
-    const r = await fetch(SUPABASE_URL+'/auth/v1/token?grant_type=password', { method:'POST', headers:this.h, body:JSON.stringify({email, password}) });
-    return r.json();
-  },
-  async signOut(token) {
-    await fetch(SUPABASE_URL+'/auth/v1/logout', { method:'POST', headers:{...this.h, 'Authorization':'Bearer '+token} });
-  },
-  async insert(table, data) {
-    const r = await fetch(SUPABASE_URL+'/rest/v1/'+table, { method:'POST', headers:{...this.h,'Prefer':'return=representation'}, body:JSON.stringify(data) });
-    return r.json();
-  }
-};
+// ── CONFIG ──
+var SUPABASE_URL = 'https://fsddgawdywoudjwumpik.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzZGRnYXdkeXdvdWRqd3VtcGlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTk0MzcsImV4cCI6MjA4ODM5NTQzN30.7eZNdY3HVd06DTgX9iyLlueDEsfysyeG5Tg7sJo8qyI';
+var ADMIN_EMAIL = 'havenosupport@gmail.com';
+var SH = {'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json'};
+
+// ── SUPABASE HELPERS ──
+function sbFetch(path, method, body) {
+  return fetch(SUPABASE_URL + path, {
+    method: method || 'GET',
+    headers: SH,
+    body: body ? JSON.stringify(body) : undefined
+  }).then(function(r) { return r.json(); });
+}
 
 // ── SESSION ──
-let currentUser = null;
-let currentToken = null;
-try { currentUser = JSON.parse(localStorage.getItem('haveno_user') || 'null'); currentToken = localStorage.getItem('haveno_token'); } catch(e){}
+var cUser = null;
+var cToken = null;
+try {
+  cUser = JSON.parse(localStorage.getItem('hv_user') || 'null');
+  cToken = localStorage.getItem('hv_tok');
+} catch(e) {}
 
 // ── GRADIENTS & ICONS ──
-const GRADS = [
+var GRADS = [
   'linear-gradient(135deg,#1a4a2e,#2d8f55)',
   'linear-gradient(135deg,#1a3a5c,#2d6fa5)',
   'linear-gradient(135deg,#4a1a4a,#8f2d8f)',
@@ -1393,199 +1440,289 @@ const GRADS = [
   'linear-gradient(135deg,#3a4a1a,#7aa52d)',
   'linear-gradient(135deg,#2e1a4a,#6e2da5)'
 ];
-const ICONS = ['🏠','🏢','🛋️','🏡','🏨','🛏️','🏠','🌳','🏙️'];
-const CITY_GRADS = [
+var ICONS = ['\uD83C\uDFE0','\uD83C\uDFE2','\uD83D\uDECB','\uD83C\uDFE1','\uD83C\uDFE8','\uD83D\uDECF','\uD83C\uDFE0','\uD83C\uDF33','\uD83C\uDFD9'];
+var CITY_GRADS = [
   'linear-gradient(135deg,#0e3320,#1a6b3c)',
   'linear-gradient(135deg,#1a1a3a,#3a2d8f)',
   'linear-gradient(135deg,#0e2030,#1a5c8f)',
   'linear-gradient(135deg,#2a1a0e,#8f5c1a)',
-  'linear-gradient(135deg,#1a2a1a,#2d6b2d)'
+  'linear-gradient(135deg,#1a2a1a,#2d6b2d)',
+  'linear-gradient(135deg,#3a1a0e,#8f3c1a)'
 ];
-const CITY_ICONS = ['🌊','🏛️','⚓','🌄','⛰️'];
+var CITY_EMOJIS = ['\uD83C\uDF0A','\uD83C\uDFDB','\u2693','\uD83C\uDF04','\u26F0','\uD83C\uDFDE'];
+
+// ── CITY IMAGES (admin only) ──
+var CITY_IMAGES = {};
+try { CITY_IMAGES = JSON.parse(localStorage.getItem('hv_city_imgs') || '{}'); } catch(e) {}
 
 // ── DATA ──
-const PROPERTIES = [
-  {id:1,type:'Sale',title:'5-Bedroom Detached Duplex',loc:'Banana Island, Lagos',price:'&#8358;350,000,000',beds:5,baths:5,sqm:620,isNew:true,verified:true,agent:'Chidi Okeke',rating:'4.9',desc:'An exceptional luxury residence on the exclusive Banana Island. Features a private pool, cinema room, home gym, and 24/7 security. Stunning waterfront views from every level.',amenities:['Private Pool','Cinema Room','Gym','Smart Home','Generator','CCTV','4-Car Garage','Waterfront View']},
-  {id:2,type:'Rent',title:'3-Bedroom Serviced Apartment',loc:'Victoria Island, Lagos',price:'&#8358;6,000,000',priceLabel:'/yr',beds:3,baths:3,sqm:180,isNew:false,verified:true,agent:'Ngozi Adeyemi',rating:'4.7',desc:'Beautifully maintained 3-bedroom apartment in a prime serviced estate on Victoria Island. Close to banks, restaurants, and the Eko Hotels. Perfect for executives.',amenities:['24/7 Power','Swimming Pool','Gym','Security','Parking','Intercom','Air Conditioning']},
-  {id:3,type:'Shortlet',title:'Luxury 2-Bed Studio Apartment',loc:'Lekki Phase 1, Lagos',price:'&#8358;85,000',priceLabel:'/night',beds:2,baths:2,sqm:110,isNew:true,verified:true,agent:'Amara Obi',rating:'4.8',desc:'Stunning contemporary apartment perfect for short stays. Fully furnished with high-speed WiFi, Netflix, and a fully equipped kitchen. Walking distance to Lekki Phase 1 shopping.',amenities:['Fully Furnished','WiFi','Netflix','Air Conditioning','Security','Parking','Weekly Cleaning']},
-  {id:4,type:'Sale',title:'4-Bedroom Terrace Duplex',loc:'Gwarinpa, Abuja',price:'&#8358;85,000,000',beds:4,baths:4,sqm:320,isNew:false,verified:true,agent:'Ibrahim Musa',rating:'4.6',desc:'Spacious 4-bedroom terrace duplex in a quiet estate in Gwarinpa. Excellent for families. Large compound, BQ included. Well-maintained with modern finishes throughout.',amenities:['BQ Included','Large Compound','Generator','Borehole','Security','Parking']},
-  {id:5,type:'Hotel',title:'Prestige Suites & Hotel',loc:'Ikeja GRA, Lagos',price:'&#8358;45,000',priceLabel:'/night',beds:1,baths:1,sqm:55,isNew:false,verified:true,agent:'Hotel Management',rating:'4.5',desc:'A refined boutique hotel experience in the heart of Ikeja GRA. Features restaurant, bar, rooftop lounge, conference facilities, and complimentary airport transfers.',amenities:['Restaurant','Bar','WiFi','Pool','Room Service','Airport Transfer','Conference Hall','Laundry']},
-  {id:6,type:'Room',title:'Furnished Room in Shared Flat',loc:'Yaba, Lagos',price:'&#8358;350,000',priceLabel:'/yr',beds:1,baths:1,sqm:22,isNew:true,verified:false,agent:'Segun Lawal',rating:'4.2',desc:'Clean, furnished room in a shared 3-bedroom flat occupied by working professionals. Close to Yaba Tech and UNILAG. Bills included. Generator available.',amenities:['Furnished','WiFi','Generator','Water Included','Kitchen Access','Close to University']},
-  {id:7,type:'Rent',title:'2-Bedroom Flat with BQ',loc:'Wuse Zone 5, Abuja',price:'&#8358;2,800,000',priceLabel:'/yr',beds:2,baths:2,sqm:135,isNew:false,verified:true,agent:'Halima Danladi',rating:'4.5',desc:'Neatly finished 2-bedroom flat with BQ in a well-managed estate. Great for small families or couples. 24/7 power supply from estate generator. Close to major roads.',amenities:['BQ','24/7 Power','Security','Borehole','Parking','Estate Management']},
-  {id:8,type:'Sale',title:'Waterfront Land - 2 Plots',loc:'Eleko Beach, Ibeju-Lekki',price:'&#8358;28,000,000',beds:0,baths:0,sqm:1200,isNew:true,verified:true,agent:'Lanre Falola',rating:'4.8',desc:'Premium waterfront land in the fastest growing corridor of Lagos. Title: C of O. Very close to the Dangote Refinery, Alaro City and the new international airport.',amenities:['C of O Title','Waterfront','Surveyed','Fenced','Accessible Road','Fast Appreciating Area']},
-  {id:9,type:'Shortlet',title:'Modern 1-Bed Apartment',loc:'Asokoro, Abuja',price:'&#8358;65,000',priceLabel:'/night',beds:1,baths:1,sqm:75,isNew:false,verified:true,agent:'Aisha Bello',rating:'4.9',desc:'Elegant shortlet apartment in the diplomatic district of Asokoro. Minimalist decor, city views, ultra-fast WiFi and Netflix. Ideal for business travellers and diplomats.',amenities:['Fully Furnished','WiFi','Smart TV','Air Conditioning','Security','City View','24/7 Power']}
+var PROPERTIES = [
+  {id:1,type:'Sale',title:'5-Bedroom Detached Duplex',loc:'Banana Island, Lagos',state:'Lagos',price:'\u20A6350,000,000',beds:5,baths:5,sqm:620,isNew:true,verified:true,agent:'Chidi Okeke',rating:'4.9',desc:'An exceptional luxury residence on the exclusive Banana Island. Features a private pool, cinema room, home gym, and 24/7 security.',amenities:['Private Pool','Cinema Room','Gym','Smart Home','Generator','CCTV','4-Car Garage','Waterfront View']},
+  {id:2,type:'Rent',title:'3-Bedroom Serviced Apartment',loc:'Victoria Island, Lagos',state:'Lagos',price:'\u20A66,000,000',pl:'/yr',beds:3,baths:3,sqm:180,isNew:false,verified:true,agent:'Ngozi Adeyemi',rating:'4.7',desc:'Beautifully maintained 3-bedroom apartment in a prime serviced estate on Victoria Island. Close to banks, restaurants, and the Eko Hotels.',amenities:['24/7 Power','Swimming Pool','Gym','Security','Parking','Intercom','Air Conditioning']},
+  {id:3,type:'Shortlet',title:'Luxury 2-Bed Studio Apartment',loc:'Lekki Phase 1, Lagos',state:'Lagos',price:'\u20A685,000',pl:'/night',beds:2,baths:2,sqm:110,isNew:true,verified:true,agent:'Amara Obi',rating:'4.8',desc:'Stunning contemporary apartment perfect for short stays. Fully furnished with high-speed WiFi, Netflix, and a fully equipped kitchen.',amenities:['Fully Furnished','WiFi','Netflix','Air Conditioning','Security','Parking','Weekly Cleaning']},
+  {id:4,type:'Sale',title:'4-Bedroom Terrace Duplex',loc:'Gwarinpa, Abuja',state:'Abuja (FCT)',price:'\u20A685,000,000',beds:4,baths:4,sqm:320,isNew:false,verified:true,agent:'Ibrahim Musa',rating:'4.6',desc:'Spacious 4-bedroom terrace duplex in a quiet estate in Gwarinpa. Excellent for families. Large compound, BQ included.',amenities:['BQ Included','Large Compound','Generator','Borehole','Security','Parking']},
+  {id:5,type:'Hotel',title:'Prestige Suites and Hotel',loc:'Ikeja GRA, Lagos',state:'Lagos',price:'\u20A645,000',pl:'/night',beds:1,baths:1,sqm:55,isNew:false,verified:true,agent:'Hotel Management',rating:'4.5',desc:'A refined boutique hotel in the heart of Ikeja GRA. Features restaurant, bar, rooftop lounge and conference facilities.',amenities:['Restaurant','Bar','WiFi','Pool','Room Service','Airport Transfer','Conference Hall','Laundry']},
+  {id:6,type:'Room',title:'Furnished Room in Shared Flat',loc:'Yaba, Lagos',state:'Lagos',price:'\u20A6350,000',pl:'/yr',beds:1,baths:1,sqm:22,isNew:true,verified:false,agent:'Segun Lawal',rating:'4.2',desc:'Clean furnished room in a shared flat occupied by working professionals. Close to Yaba Tech and UNILAG. Bills included.',amenities:['Furnished','WiFi','Generator','Water Included','Kitchen Access','Near University']},
+  {id:7,type:'Rent',title:'2-Bedroom Flat with BQ',loc:'Wuse Zone 5, Abuja',state:'Abuja (FCT)',price:'\u20A62,800,000',pl:'/yr',beds:2,baths:2,sqm:135,isNew:false,verified:true,agent:'Halima Danladi',rating:'4.5',desc:'Neatly finished 2-bedroom flat with BQ in a well-managed estate. Great for small families or couples.',amenities:['BQ','24/7 Power','Security','Borehole','Parking','Estate Management']},
+  {id:8,type:'Sale',title:'Waterfront Land 2 Plots',loc:'Eleko Beach, Ibeju-Lekki',state:'Lagos',price:'\u20A628,000,000',beds:0,baths:0,sqm:1200,isNew:true,verified:true,agent:'Lanre Falola',rating:'4.8',desc:'Premium waterfront land in the fastest growing corridor of Lagos. C of O title. Close to Dangote Refinery and new international airport.',amenities:['C of O Title','Waterfront','Surveyed','Fenced','Accessible Road','Fast Appreciating']},
+  {id:9,type:'Shortlet',title:'Modern 1-Bed Apartment',loc:'Asokoro, Abuja',state:'Abuja (FCT)',price:'\u20A665,000',pl:'/night',beds:1,baths:1,sqm:75,isNew:false,verified:true,agent:'Aisha Bello',rating:'4.9',desc:'Elegant shortlet apartment in the diplomatic district of Asokoro. Minimalist decor, city views and ultra-fast WiFi.',amenities:['Fully Furnished','WiFi','Smart TV','Air Conditioning','Security','City View','24/7 Power']}
 ];
-const CITIES = [
+
+var CITIES = [
   {name:'Lagos',count:'New listings daily'},
   {name:'Abuja',count:'New listings daily'},
   {name:'Port Harcourt',count:'New listings daily'},
   {name:'Ibadan',count:'New listings daily'},
-  {name:'Enugu',count:'New listings daily'}
+  {name:'Enugu',count:'New listings daily'},
+  {name:'Kogi',count:'New listings daily'}
 ];
 
-let activeTab = 'Buy';
-let activeFilter = 'All';
-let savedProps = new Set();
+var activeFilter = 'All';
+var activeSearch = '';
+var savedProps = new Set();
 
 // ── RENDER LISTINGS ──
-function renderListings(filter) {
-  const grid = document.getElementById('listingsGrid');
-  const filtered = filter === 'All' ? PROPERTIES : PROPERTIES.filter(function(p){ return p.type === filter; });
-  grid.innerHTML = filtered.map(function(p) {
-    const gi = (p.id-1) % 9;
-    const favBtn = savedProps.has(p.id)
-      ? '<button class="prop-fav saved" onclick="toggleSave(event,'+p.id+')">&#10084;&#65039;</button>'
-      : '<button class="prop-fav" onclick="toggleSave(event,'+p.id+')">&#129293;</button>';
-    return '<div class="prop-card" onclick="openDetail('+p.id+')">'
-      +'<div class="prop-img">'
-      +'<div class="prop-img-inner" style="background:'+GRADS[gi]+';display:flex;align-items:center;justify-content:center;font-size:4rem;">'+ICONS[gi]+'</div>'
-      +'<span class="prop-badge badge-'+p.type.toLowerCase()+'">'+(p.type==='Sale'?'For Sale':p.type==='Rent'?'For Rent':p.type)+'</span>'
-      +(p.isNew ? '<span class="badge-new">New</span>' : favBtn)
-      +(p.verified ? '<span class="badge-verified">&#10003; Verified</span>' : '')
-      +'</div>'
-      +'<div class="prop-body">'
-      +'<div class="prop-price">'+p.price+'<span>'+(p.priceLabel||'')+'</span></div>'
-      +'<div class="prop-title">'+p.title+'</div>'
-      +'<div class="prop-loc">&#128205; '+p.loc+'</div>'
-      +'<div class="prop-feats">'
-      +(p.beds>0?'<span class="prop-feat">&#128716; '+p.beds+' Bed'+(p.beds!==1?'s':'')+'</span>':'<span class="prop-feat">&#128208; Land</span>')
-      +(p.baths>0?'<span class="prop-feat">&#128703; '+p.baths+' Bath'+(p.baths!==1?'s':'')+'</span>':'')
-      +'<span class="prop-feat">&#128207; '+p.sqm+'m&#178;</span>'
-      +'</div></div></div>';
+function renderListings(filter, search) {
+  if (filter !== undefined) activeFilter = filter;
+  if (search !== undefined) activeSearch = search;
+
+  var grid = document.getElementById('listingsGrid');
+  var list = PROPERTIES.filter(function(p) {
+    var matchType = activeFilter === 'All' || p.type === activeFilter;
+    var s = activeSearch.toLowerCase().trim();
+    var matchSearch = !s
+      || p.loc.toLowerCase().indexOf(s) > -1
+      || p.state.toLowerCase().indexOf(s) > -1
+      || p.title.toLowerCase().indexOf(s) > -1;
+    return matchType && matchSearch;
+  });
+
+  if (list.length === 0) {
+    var stateMsg = activeSearch ? activeSearch : 'this category';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 24px">'
+      + '<div style="font-size:4rem;margin-bottom:20px">\uD83D\uDDFA\uFE0F</div>'
+      + '<h3 style="color:#c9a84c;font-size:1.3rem;margin-bottom:10px">No listings in ' + stateMsg + ' yet</h3>'
+      + '<p style="color:rgba(255,255,255,0.55);font-size:0.95rem;line-height:1.7;max-width:320px;margin:0 auto 24px">Be the first agent to list a property here and reach thousands of buyers.</p>'
+      + '<button onclick="openListModal()" style="background:#c9a84c;color:#0e1a14;border:none;padding:14px 32px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:0.3px">+ List a Property Here</button>'
+      + '</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(p) {
+    var gi = (p.id - 1) % 9;
+    var favBtn = savedProps.has(p.id)
+      ? '<button class="prop-fav saved" onclick="toggleSave(event,' + p.id + ')">\u2764\uFE0F</button>'
+      : '<button class="prop-fav" onclick="toggleSave(event,' + p.id + ')">\uD83E\uDD0D</button>';
+    var badge = p.isNew ? '<span class="badge-new">New</span>' : favBtn;
+    var vbadge = p.verified ? '<span class="badge-verified">\u2713 Verified</span>' : '';
+    var blabel = p.type === 'Sale' ? 'For Sale' : p.type === 'Rent' ? 'For Rent' : p.type;
+    return '<div class="prop-card" onclick="openDetail(' + p.id + ')">'
+      + '<div class="prop-img">'
+      + '<div class="prop-img-inner" style="background:' + GRADS[gi] + ';display:flex;align-items:center;justify-content:center;font-size:4rem">' + ICONS[gi] + '</div>'
+      + '<span class="prop-badge badge-' + p.type.toLowerCase() + '">' + blabel + '</span>'
+      + badge + vbadge
+      + '</div>'
+      + '<div class="prop-body">'
+      + '<div class="prop-price">' + p.price + '<span>' + (p.pl || '') + '</span></div>'
+      + '<div class="prop-title">' + p.title + '</div>'
+      + '<div class="prop-loc">\uD83D\uDCCD ' + p.loc + '</div>'
+      + '<div class="prop-feats">'
+      + (p.beds > 0 ? '<span class="prop-feat">\uD83D\uDECF ' + p.beds + ' Bed' + (p.beds !== 1 ? 's' : '') + '</span>' : '<span class="prop-feat">Land</span>')
+      + (p.baths > 0 ? '<span class="prop-feat">\uD83D\uDEC3 ' + p.baths + ' Bath' + (p.baths !== 1 ? 's' : '') + '</span>' : '')
+      + '<span class="prop-feat">' + p.sqm + 'm\u00B2</span>'
+      + '</div></div></div>';
   }).join('');
 }
 
+// ── RENDER CITIES ──
 function renderCities() {
-  const grid = document.getElementById('citiesGrid');
-  grid.innerHTML = CITIES.map(function(c,i) {
-    return '<div class="city-card" style="'+(i===0?'grid-row:span 2':'')+'">'
-      +'<div style="background:'+CITY_GRADS[i]+';width:100%;min-height:'+(i===0?'436':'200')+'px;display:flex;align-items:center;justify-content:center;font-size:'+(i===0?'5':'3.5')+'rem;">'+CITY_ICONS[i]+'</div>'
-      +'<div class="city-overlay">'
-      +'<div class="city-name">'+c.name+'</div>'
-      +'<div class="city-count">'+c.count+'</div>'
-      +'</div></div>';
+  var grid = document.getElementById('citiesGrid');
+  var isAdmin = cUser && cUser.email === ADMIN_EMAIL;
+  grid.innerHTML = CITIES.map(function(c, i) {
+    var gi = i % CITY_GRADS.length;
+    var customImg = CITY_IMAGES[c.name];
+    var innerStyle, innerContent;
+    if (customImg) {
+      innerStyle = 'background:url(' + customImg + ') center/cover no-repeat';
+      innerContent = '';
+    } else {
+      innerStyle = 'background:' + CITY_GRADS[gi] + ';display:flex;align-items:center;justify-content:center;font-size:' + (i === 0 ? '5' : '3.5') + 'rem';
+      innerContent = CITY_EMOJIS[gi];
+    }
+    var h = i === 0 ? '436' : '200';
+    var editBtn = '';
+    if (isAdmin) {
+      editBtn = '<button class="city-edit-btn" data-city="' + c.name + '" onclick="editCityPhoto(event)" style="position:absolute;top:10px;right:10px;background:rgba(201,168,76,0.95);color:#0e1a14;border:none;border-radius:20px;padding:6px 12px;font-size:0.75rem;cursor:pointer;z-index:10;font-weight:700">Edit Photo</button>';
+    }
+    return '<div class="city-card" style="position:relative;' + (i === 0 ? 'grid-row:span 2' : '') + '" onclick="searchByCity(\'' + c.name + '\')">'
+      + editBtn
+      + '<div style="' + innerStyle + ';width:100%;min-height:' + h + 'px">' + innerContent + '</div>'
+      + '<div class="city-overlay"><div class="city-name">' + c.name + '</div><div class="city-count">' + c.count + '</div></div>'
+      + '</div>';
   }).join('');
+}
+
+function editCityPhoto(e) {
+  e.stopPropagation();
+  var cityName = e.currentTarget.getAttribute('data-city');
+  var input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = function() {
+    var file = input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      CITY_IMAGES[cityName] = ev.target.result;
+      try { localStorage.setItem('hv_city_imgs', JSON.stringify(CITY_IMAGES)); } catch(e2) {}
+      renderCities();
+      showToast(cityName + ' photo updated!', 'success');
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+function searchByCity(name) {
+  document.getElementById('searchLocation').value = name;
+  renderListings(undefined, name);
+  document.getElementById('listings').scrollIntoView({behavior:'smooth'});
 }
 
 // ── SEARCH ──
 function setTab(el, tab) {
-  activeTab = tab;
-  document.querySelectorAll('.search-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.search-tab').forEach(function(t) { t.classList.remove('active'); });
   el.classList.add('active');
 }
+
 function doSearch() {
-  var loc = document.getElementById('searchLocation').value;
-  showToast('Searching ' + activeTab + ' properties' + (loc ? ' in ' + loc : '') + '...', 'success');
-  setTimeout(function(){ document.getElementById('listings').scrollIntoView({behavior:'smooth'}); }, 500);
+  var loc = document.getElementById('searchLocation').value.trim();
+  renderListings(undefined, loc);
+  document.getElementById('listings').scrollIntoView({behavior:'smooth'});
 }
 
-// ── FILTER ──
+// ── FILTER PILLS ──
 function filterListings(el, filter) {
-  activeFilter = filter;
-  if (el) {
-    document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
-    el.classList.add('active');
-  }
-  renderListings(filter);
-  if (!el) document.getElementById('listings').scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  renderListings(filter, activeSearch);
 }
 
 // ── SAVE ──
 function toggleSave(e, id) {
   e.stopPropagation();
-  if (savedProps.has(id)) { savedProps.delete(id); showToast('Removed from saved', 'error'); }
-  else { savedProps.add(id); showToast('Property saved!', 'success'); }
-  renderListings(activeFilter);
+  if (savedProps.has(id)) {
+    savedProps.delete(id);
+    showToast('Removed from saved', 'error');
+  } else {
+    savedProps.add(id);
+    showToast('Property saved!', 'success');
+  }
+  renderListings();
 }
 
 // ── PROPERTY DETAIL ──
 function openDetail(id) {
   var p = null;
-  for (var i=0; i<PROPERTIES.length; i++) { if (PROPERTIES[i].id===id) { p=PROPERTIES[i]; break; } }
+  for (var i = 0; i < PROPERTIES.length; i++) {
+    if (PROPERTIES[i].id === id) { p = PROPERTIES[i]; break; }
+  }
   if (!p) return;
-  var gi = (p.id-1)%9;
-  var overlay = document.getElementById('detailOverlay');
+  var gi = (p.id - 1) % 9;
   var panel = document.getElementById('detailPanel');
   panel.innerHTML = '<div class="detail-gallery">'
-    +'<div style="background:'+GRADS[gi]+';width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8rem;">'+ICONS[gi]+'</div>'
-    +'<div class="gallery-gradient"></div>'
-    +'<button class="gallery-close" onclick="closeDetail()">&#8592;</button>'
-    +'</div>'
-    +'<div class="detail-body">'
-    +'<div class="detail-top">'
-    +'<div>'
-    +'<div class="detail-price">'+p.price+(p.priceLabel?'<span style="font-size:1rem;font-weight:400;color:var(--grey)">'+p.priceLabel+'</span>':'')+'</div>'
-    +'<div class="detail-title">'+p.title+'</div>'
-    +'<div class="detail-loc">&#128205; '+p.loc+(p.verified?' <span style="color:var(--green);font-weight:600">&#10003; Verified</span>':'')+'</div>'
-    +'</div>'
-    +'<div class="detail-actions">'
-    +'<button class="btn-tour" onclick="showToast('Virtual tour coming soon!','success')">Virtual Tour</button>'
-    +'<button class="btn-enquire" onclick="showToast('Enquiry sent!','success')">Send Enquiry</button>'
-    +'</div></div>'
-    +'<div class="detail-specs">'
-    +(p.beds>0?'<div class="detail-spec"><div class="detail-spec-val">'+p.beds+'</div><div class="detail-spec-key">Bedrooms</div></div>':'')
-    +(p.baths>0?'<div class="detail-spec"><div class="detail-spec-val">'+p.baths+'</div><div class="detail-spec-key">Bathrooms</div></div>':'')
-    +'<div class="detail-spec"><div class="detail-spec-val">'+p.sqm+'m&#178;</div><div class="detail-spec-key">Area</div></div>'
-    +'<div class="detail-spec"><div class="detail-spec-val">'+p.type+'</div><div class="detail-spec-key">Type</div></div>'
-    +'</div>'
-    +'<p class="detail-desc">'+p.desc+'</p>'
-    +'<div class="detail-amenities">'+p.amenities.map(function(a){ return '<span class="amenity-tag">&#10003; '+a+'</span>'; }).join('')+'</div>'
-    +'<div class="agent-card">'
-    +'<div class="agent-avatar">'+p.agent[0]+'</div>'
-    +'<div class="agent-info">'
-    +'<div class="agent-name">'+p.agent+'</div>'
-    +'<div class="agent-role">Verified Agent</div>'
-    +'<div class="agent-rating">&#9733;&#9733;&#9733;&#9733;&#9733; '+p.rating+' Response: under 1hr</div>'
-    +'</div>'
-    +'<div class="agent-contact">'
-    +'<button class="btn-call" onclick="showToast('Calling agent...','success')">Call</button>'
-    +'<button class="btn-chat" onclick="showToast('Chat coming soon!','success')">Chat</button>'
-    +'</div></div></div>';
-  overlay.classList.add('open');
+    + '<div style="background:' + GRADS[gi] + ';width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8rem">' + ICONS[gi] + '</div>'
+    + '<div class="gallery-gradient"></div>'
+    + '<button class="gallery-close" onclick="closeDetail()">\u2190</button>'
+    + '</div>'
+    + '<div class="detail-body">'
+    + '<div class="detail-top">'
+    + '<div>'
+    + '<div class="detail-price">' + p.price + (p.pl ? '<span style="font-size:1rem;font-weight:400;color:var(--grey)">' + p.pl + '</span>' : '') + '</div>'
+    + '<div class="detail-title">' + p.title + '</div>'
+    + '<div class="detail-loc">\uD83D\uDCCD ' + p.loc + (p.verified ? ' <span style="color:var(--green);font-weight:600">\u2713 Verified</span>' : '') + '</div>'
+    + '</div>'
+    + '<div class="detail-actions">'
+    + '<button class="btn-tour" onclick="openMap(' + JSON.stringify(p.loc) + ',' + JSON.stringify(p.title) + ')">\uD83D\uDDFA View on Map</button>'
+    + '<button class="btn-enquire" onclick="showToast(\'Enquiry sent!\',\'success\')">Send Enquiry</button>'
+    + '</div></div>'
+    + '<div class="detail-specs">'
+    + (p.beds > 0 ? '<div class="detail-spec"><div class="detail-spec-val">' + p.beds + '</div><div class="detail-spec-key">Bedrooms</div></div>' : '')
+    + (p.baths > 0 ? '<div class="detail-spec"><div class="detail-spec-val">' + p.baths + '</div><div class="detail-spec-key">Bathrooms</div></div>' : '')
+    + '<div class="detail-spec"><div class="detail-spec-val">' + p.sqm + 'm\u00B2</div><div class="detail-spec-key">Area</div></div>'
+    + '<div class="detail-spec"><div class="detail-spec-val">' + p.type + '</div><div class="detail-spec-key">Type</div></div>'
+    + '</div>'
+    + '<p class="detail-desc">' + p.desc + '</p>'
+    + '<div class="detail-amenities">' + p.amenities.map(function(a) { return '<span class="amenity-tag">\u2713 ' + a + '</span>'; }).join('') + '</div>'
+    + '<div class="agent-card">'
+    + '<div class="agent-avatar">' + p.agent[0] + '</div>'
+    + '<div class="agent-info">'
+    + '<div class="agent-name">' + p.agent + '</div>'
+    + '<div class="agent-role">Verified Agent</div>'
+    + '<div class="agent-rating">\u2605\u2605\u2605\u2605\u2605 ' + p.rating + '</div>'
+    + '</div>'
+    + '<div class="agent-contact">'
+    + '<button class="btn-call" onclick="showToast(\'Calling agent...\',\'success\')">Call</button>'
+    + '<button class="btn-chat" onclick="showToast(\'Chat coming soon!\',\'success\')">Chat</button>'
+    + '</div></div></div>';
+  document.getElementById('detailOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
 function closeDetail() {
   document.getElementById('detailOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+
 document.getElementById('detailOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeDetail();
 });
 
 // ── NAV ──
-function updateNavForUser() {
+function updateNav() {
   var cta = document.querySelector('.nav-cta');
-  if (currentUser) {
-    cta.innerHTML = '<span style="color:rgba(255,255,255,0.7);font-size:0.85rem">Hi, '+(currentUser.full_name||currentUser.email)+'</span>'
-      +'<button class="btn-outline-nav" onclick="doSignOut()">Sign Out</button>'
-      +'<button class="btn-nav" onclick="openListModal()">+ List Property</button>';
+  if (cUser) {
+    cta.innerHTML = '<span style="color:rgba(255,255,255,0.6);font-size:0.85rem">Hi, ' + (cUser.full_name || cUser.email) + '</span>'
+      + '<button class="btn-outline-nav" onclick="doSignOut()">Sign Out</button>'
+      + '<button class="btn-nav" onclick="openListModal()">+ List</button>';
   } else {
-    cta.innerHTML = '<button class="btn-outline-nav" onclick="openModal('login')">Sign In</button>'
-      +'<button class="btn-nav" onclick="openModal('register')">Get Started</button>';
+    cta.innerHTML = '<button class="btn-outline-nav" onclick="openModal(\'login\')">Sign In</button>'
+      + '<button class="btn-nav" onclick="openModal(\'register\')">Get Started</button>';
   }
 }
 
+// ── AUTH ──
 async function doSignOut() {
-  if (currentToken) await sb.signOut(currentToken);
-  try { localStorage.removeItem('haveno_user'); localStorage.removeItem('haveno_token'); } catch(e){}
-  currentUser = null; currentToken = null;
-  updateNavForUser();
-  showToast('Signed out successfully', 'success');
+  try {
+    if (cToken) {
+      await fetch(SUPABASE_URL + '/auth/v1/logout', {
+        method: 'POST',
+        headers: Object.assign({}, SH, {'Authorization': 'Bearer ' + cToken})
+      });
+    }
+  } catch(e) {}
+  try { localStorage.removeItem('hv_user'); localStorage.removeItem('hv_tok'); } catch(e) {}
+  cUser = null; cToken = null;
+  updateNav();
+  showToast('Signed out', 'success');
 }
 
-// ── AUTH MODAL ──
 function openModal(type) {
   document.getElementById('authModal').classList.add('open');
   switchTab(type);
   document.body.style.overflow = 'hidden';
 }
+
 function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('open');
   document.body.style.overflow = '';
 }
+
 function closeModalOutside(e) {
   if (e.target === e.currentTarget) closeModal(e.currentTarget.id);
 }
+
 function switchTab(type) {
   var isLogin = type === 'login';
   document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
@@ -1593,25 +1730,31 @@ function switchTab(type) {
   document.getElementById('loginTab').classList.toggle('active', isLogin);
   document.getElementById('registerTab').classList.toggle('active', !isLogin);
   document.getElementById('modalTitle').textContent = isLogin ? 'Welcome Back' : 'Create Account';
-  document.getElementById('modalSub').textContent = isLogin ? 'Sign in to your Haveno account' : 'Be among the first on Haveno';
+  document.getElementById('modalSub').textContent = isLogin ? 'Sign in to your Haveno account' : 'Join Haveno today';
 }
 
 async function doLogin() {
   var email = document.getElementById('loginEmail').value.trim();
   var pass = document.getElementById('loginPass').value;
   if (!email || !pass) { showToast('Please fill in all fields', 'error'); return; }
-  if (email.indexOf('@') < 0) { showToast('Please enter a valid email', 'error'); return; }
   showToast('Signing in...', 'success');
   try {
-    var res = await sb.signIn(email, pass);
+    var res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+      method: 'POST', headers: SH, body: JSON.stringify({email: email, password: pass})
+    }).then(function(r) { return r.json(); });
     if (res.error) { showToast(res.error_description || res.error, 'error'); return; }
-    currentToken = res.access_token;
-    currentUser = { email: res.user.email, full_name: (res.user.user_metadata && res.user.user_metadata.full_name) || email, id: res.user.id };
-    try { localStorage.setItem('haveno_user', JSON.stringify(currentUser)); localStorage.setItem('haveno_token', currentToken); } catch(e){}
-    updateNavForUser();
-    showToast('Welcome back to Haveno!', 'success');
+    cToken = res.access_token;
+    cUser = {
+      email: res.user.email,
+      full_name: (res.user.user_metadata && res.user.user_metadata.full_name) || res.user.email,
+      id: res.user.id
+    };
+    try { localStorage.setItem('hv_user', JSON.stringify(cUser)); localStorage.setItem('hv_tok', cToken); } catch(e) {}
+    updateNav();
+    renderCities();
+    showToast('Welcome back!', 'success');
     closeModal('authModal');
-  } catch(e) { showToast('Connection error. Please try again.', 'error'); }
+  } catch(e) { showToast('Connection error. Try again.', 'error'); }
 }
 
 async function doRegister() {
@@ -1619,51 +1762,60 @@ async function doRegister() {
   var email = document.getElementById('regEmail').value.trim();
   var phone = document.getElementById('regPhone').value.trim();
   var pass = document.getElementById('regPass').value;
-  if (!name || !email || !phone || !pass) { showToast('Please fill in all fields', 'error'); return; }
-  if (email.indexOf('@') < 0) { showToast('Please enter a valid email', 'error'); return; }
+  if (!name || !email || !phone || !pass) { showToast('Please fill all fields', 'error'); return; }
   if (pass.length < 8) { showToast('Password must be at least 8 characters', 'error'); return; }
-  showToast('Creating your account...', 'success');
+  showToast('Creating account...', 'success');
   try {
-    var res = await sb.signUp(email, pass, { full_name: name, phone: phone });
+    var res = await fetch(SUPABASE_URL + '/auth/v1/signup', {
+      method: 'POST', headers: SH,
+      body: JSON.stringify({email: email, password: pass, data: {full_name: name, phone: phone}})
+    }).then(function(r) { return r.json(); });
     if (res.error) { showToast(res.msg || res.error, 'error'); return; }
     showToast('Account created! Check your email to verify.', 'success');
     closeModal('authModal');
-  } catch(e) { showToast('Connection error. Please try again.', 'error'); }
+  } catch(e) { showToast('Connection error. Try again.', 'error'); }
 }
 
 // ── LIST MODAL ──
 function openListModal() {
-  if (!currentUser) { showToast('Please sign in to list a property', 'error'); openModal('login'); return; }
-  closeModal('authModal');
+  if (!cUser) { showToast('Please sign in first', 'error'); openModal('login'); return; }
   document.getElementById('listModal').classList.add('open');
   document.body.style.overflow = 'hidden';
   showStep(1);
 }
+
 var currentStep = 1;
+
 function showStep(n) {
   currentStep = n;
-  [1,2,3].forEach(function(i){ document.getElementById('listStep'+i).style.display = i===n?'block':'none'; });
-  document.querySelectorAll('.step-dot').forEach(function(d,i){ d.classList.toggle('done', i<n); });
+  [1, 2, 3].forEach(function(i) {
+    document.getElementById('listStep' + i).style.display = i === n ? 'block' : 'none';
+  });
+  document.querySelectorAll('.step-dot').forEach(function(d, i) {
+    d.classList.toggle('done', i < n);
+  });
 }
+
 function nextStep(n) {
-  if (n===2) {
-    if (!document.getElementById('lTitle').value) { showToast('Please enter a property title', 'error'); return; }
-    if (!document.getElementById('lAddress').value) { showToast('Please enter the address', 'error'); return; }
+  if (n === 2) {
+    if (!document.getElementById('lTitle').value) { showToast('Enter property title', 'error'); return; }
+    if (!document.getElementById('lAddress').value) { showToast('Enter address', 'error'); return; }
   }
-  if (n===3 && !document.getElementById('lPrice').value) { showToast('Please enter a price', 'error'); return; }
+  if (n === 3 && !document.getElementById('lPrice').value) { showToast('Enter price', 'error'); return; }
   showStep(n);
 }
+
 function prevStep(n) { showStep(n); }
 
 async function submitListing() {
-  var name = document.getElementById('lAgentName').value.trim();
-  var phone = document.getElementById('lAgentPhone').value.trim();
-  var email = document.getElementById('lAgentEmail').value.trim();
-  if (!name || !phone || !email) { showToast('Please fill in your contact details', 'error'); return; }
-  showToast('Submitting your listing...', 'success');
+  var agentName = document.getElementById('lAgentName').value.trim();
+  var agentPhone = document.getElementById('lAgentPhone').value.trim();
+  var agentEmail = document.getElementById('lAgentEmail').value.trim();
+  if (!agentName || !agentPhone || !agentEmail) { showToast('Fill in your contact details', 'error'); return; }
+  showToast('Submitting...', 'success');
   var amenitiesRaw = document.getElementById('lAmenities').value;
-  var amenities = amenitiesRaw ? amenitiesRaw.split(',').map(function(a){ return a.trim(); }).filter(Boolean) : [];
-  var listing = {
+  var amenities = amenitiesRaw ? amenitiesRaw.split(',').map(function(a) { return a.trim(); }).filter(Boolean) : [];
+  var data = {
     title: document.getElementById('lTitle').value,
     listing_type: document.getElementById('lType').value,
     type: document.getElementById('lPropType').value,
@@ -1676,65 +1828,115 @@ async function submitListing() {
     furnishing: document.getElementById('lFurnish').value,
     description: document.getElementById('lDesc').value,
     amenities: amenities,
-    agent_name: name, agent_phone: phone, agent_email: email,
-    user_id: currentUser ? currentUser.id : null,
+    agent_name: agentName, agent_phone: agentPhone, agent_email: agentEmail,
+    user_id: cUser ? cUser.id : null,
     is_verified: false, is_featured: false
   };
   try {
-    var res = await sb.insert('properties', listing);
+    var res = await fetch(SUPABASE_URL + '/rest/v1/properties', {
+      method: 'POST',
+      headers: Object.assign({}, SH, {'Prefer': 'return=representation'}),
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); });
     if (res && !res.error && !res.message) {
       showToast('Listing submitted! We will review and publish within 24 hours.', 'success');
       closeModal('listModal');
     } else {
-      showToast((res && (res.message || res.error)) || 'Submission failed. Please try again.', 'error');
+      showToast((res && (res.message || res.error)) || 'Failed. Try again.', 'error');
     }
-  } catch(e) { showToast('Connection error. Please try again.', 'error'); }
+  } catch(e) { showToast('Connection error.', 'error'); }
+}
+
+// ── PHOTO PREVIEW ──
+function previewPhotos(input) {
+  var preview = document.getElementById('photoPreview');
+  preview.innerHTML = '';
+  var files = Array.from(input.files).slice(0, 5);
+  files.forEach(function(file) {
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      var img = document.createElement('img');
+      img.src = ev.target.result;
+      img.style.cssText = 'width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--green)';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+  showToast(files.length + ' photo' + (files.length > 1 ? 's' : '') + ' selected!', 'success');
 }
 
 // ── NEWSLETTER ──
 async function subscribeNewsletter() {
   var email = document.getElementById('newsletterEmail').value.trim();
-  if (!email || email.indexOf('@') < 0) { showToast('Please enter a valid email address', 'error'); return; }
-  try { await sb.insert('newsletter', { email: email }); } catch(e) {}
-  showToast('Subscribed! You will get the best listings first.', 'success');
+  if (!email || email.indexOf('@') < 0) { showToast('Enter a valid email', 'error'); return; }
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/newsletter', {
+      method: 'POST', headers: SH, body: JSON.stringify({email: email})
+    });
+  } catch(e) {}
+  showToast('Subscribed! You will get listings first.', 'success');
   document.getElementById('newsletterEmail').value = '';
 }
 
 // ── TOAST ──
 function showToast(msg, type) {
   var t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast ' + type + ' show';
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
   clearTimeout(t._timer);
-  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 3500);
+  t._timer = setTimeout(function() { t.classList.remove('show'); }, 3500);
 }
 
 // ── MOBILE NAV ──
 function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
 function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+function scrollTo(sel) { var el = document.querySelector(sel); if (el) el.scrollIntoView({behavior:'smooth'}); }
 
 // ── SCROLL REVEAL ──
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+  });
+}, {threshold: 0.12});
+document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
 
-// ── NAV SCROLL ──
+// ── NAV SHADOW ON SCROLL ──
 window.addEventListener('scroll', function() {
-  var nav = document.getElementById('mainNav');
-  nav.style.boxShadow = window.scrollY > 40 ? '0 4px 24px rgba(14,26,20,0.3)' : 'none';
+  document.getElementById('mainNav').style.boxShadow = window.scrollY > 40
+    ? '0 4px 24px rgba(14,26,20,0.3)' : 'none';
 });
 
-// ── KEYBOARD ──
+// ── KEYBOARD CLOSE ──
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal('authModal'); closeModal('listModal'); closeDetail(); }
+  if (e.key === 'Escape') {
+    closeModal('authModal');
+    closeModal('listModal');
+    closeDetail();
+  }
 });
 
-function scrollTo(sel) { var el = document.querySelector(sel); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+// ── MAP ──
+function openMap(loc, title) {
+  var q = encodeURIComponent(loc + ', Nigeria');
+  var src = 'https://maps.google.com/maps?q=' + q + '&output=embed&z=15';
+  document.getElementById('mapFrame').src = src;
+  document.getElementById('mapTitle').textContent = title || loc;
+  document.getElementById('mapModal').classList.add('open');
+}
+
+function closeMapModal(e) {
+  if (e.target === document.getElementById('mapModal')) {
+    document.getElementById('mapModal').classList.remove('open');
+    document.getElementById('mapFrame').src = '';
+  }
+}
 
 // ── INIT ──
-renderListings('All');
+renderListings('All', '');
 renderCities();
-updateNavForUser();
+updateNav();
+
 </script>
 
 </body>
